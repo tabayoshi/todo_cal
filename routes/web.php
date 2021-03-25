@@ -18,3 +18,9 @@ Route::get('/', 'CalendarController@show');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//祝日設定
+Route::get('/holiday_setting', 'Calendar\HolidaySettingController@form')
+    ->name("holiday_setting");
+Route::post('/holiday_setting', 'Calendar\HolidaySettingController@update')
+    ->name("update_holiday_setting");
