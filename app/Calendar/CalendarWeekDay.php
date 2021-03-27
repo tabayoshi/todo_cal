@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Calendar;
 
 use Carbon\Carbon;
@@ -12,11 +13,19 @@ class CalendarWeekDay {
 		$this->carbon = new Carbon($date);
 	}
 
-	function getClassName() {
-		$classNames = [ "day-" . strtoLower($this->carbon->format("D")) ];
+	function getDateKey(){
+		return $this->carbon->format("Ymd");
+	}
+
+	function setHoliday($flag){
+		$this->isHoliday = $flag;
+	}
+
+	function getClassName(){
+		$classNames = [ "day-" . strtolower($this->carbon->format("D")) ];
 
 		//祝日フラグを出す
-		if($this->isHoliday) {
+		if($this->isHoliday){
 			$classNames[] = "day-close";
 		}
 
@@ -24,7 +33,7 @@ class CalendarWeekDay {
 	}
 
 	/**
-	 *@return
+	 * @return 
 	 */
 	function render(){
 		return '<p class="day">' . $this->carbon->format("j"). '</p>';
@@ -38,21 +47,27 @@ class CalendarWeekDay {
 		if($this->carbon->isMonday() && $setting->isCloseMonday()){
 			$this->isHoliday = true;	
 		}
+
 		else if($this->carbon->isTuesday() && $setting->isCloseTuesday()){
 			$this->isHoliday = true;	
 		}
+
 		else if($this->carbon->isWednesday() && $setting->isCloseWednesday()){
 			$this->isHoliday = true;	
 		}
+
 		else if($this->carbon->isThursday() && $setting->isCloseThursday()){
 			$this->isHoliday = true;	
 		}
+
 		else if($this->carbon->isFriday() && $setting->isCloseFriday()){
 			$this->isHoliday = true;	
 		}
+
 		else if($this->carbon->isSaturday() && $setting->isCloseSaturday()){
 			$this->isHoliday = true;	
 		}
+
 		else if($this->carbon->isSunday() && $setting->isCloseSunday()){
 			$this->isHoliday = true;	
 		}

@@ -3,7 +3,7 @@
 namespace App\Calendar;
 
 use Illuminate\Database\Eloquent\Model;
-use Yasumi\Yasumi;
+use \Yasumi\Yasumi;
 
 class HolidaySetting extends Model
 {
