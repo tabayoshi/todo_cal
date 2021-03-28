@@ -8,14 +8,14 @@ use App\Calendar;
 
 class CalendarController extends Controller
 {
-    public function update(Request $request)
+    public function show(Request $request)
     {
         // 休日データ取得
         $data = new Holiday();
         $list = Holiday::all();
         return view('calendar.holiday', ['list' => $list, 'data' => $data]);        
     }
-    public function show(Request $request)
+    public function update(Request $request)
     {
         // 休日データ取得
         $data = new Holiday();
@@ -52,7 +52,7 @@ class CalendarController extends Controller
 
     public function index(Request $request)
     {
-        $cal = new Calendar();
+        // $cal = new Calendar();
         $list = Holiday::all();
         $cal = new Calendar($list);
         $tag = $cal->showCalendarTag($request->month, $request->year);

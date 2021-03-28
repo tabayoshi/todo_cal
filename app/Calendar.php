@@ -4,7 +4,7 @@ namespace App;
 class Calendar
 {
   private $holidays;
-  function _construct($holidays) {
+  function __construct($holidays) {
     $this->holidays = $holidays;
   }
   private $html;
@@ -59,9 +59,9 @@ class Calendar
           // 先月・来月の日付の場合
           $this->html .= "<td>&nbsp;</td>";
         } else {
-          $this->html .= "<td>" . $day . "&nbsp";
+          $this->html .= "<td>" . $day ."&nbsp";
           $target = date("Y-m-d", mktime(0, 0, 0, $month, $day, $year));
-          foreach((array)$this->holidays as $val) { //(arrray)で$this->holidaysを強制的に配列にする
+          foreach($this->holidays as $val) { //(arrray)で$this->holidaysを強制的に配列にする
             if($val->day == $target) {
               $this->html .= $val->description;
               break;
