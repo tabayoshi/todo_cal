@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/','CalendarController@index');
 
-Route::get('/holiday','CalendarController@getHoliday');
-Route::post('/holiday','CalendarController@postHoliday');
+Route::get('/holiday','CalendarController@show');
+Route::post('/holiday','CalendarController@store');
 
-Route::get('/holiday/{id}', 'CalendarController@getHolidayId');
+Route::get('/holiday/{id}', 'CalendarController@update');
 
-Route::delete('/holiday',  'CalendarController@deleteHoliday');
+Route::delete('/holiday',  'CalendarController@delete');

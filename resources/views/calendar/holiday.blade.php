@@ -3,7 +3,7 @@
 @section('content')
     <h1>休日設定</h1>
     <!-- 休日入力フォーム -->
-    <form method="POST" action="/holiday"> 
+    <form method="POST" action="{{ url('/holiday') }}"> 
     <div class="form-group">
     {{csrf_field()}}    
     <label for="day">日付[YYYY/MM/DD] </label>
@@ -28,11 +28,11 @@
     <tbody>
     @foreach($list as $val)
     <tr>
-        <th scope="row"><a href="{{ url('/holiday/'. $val->id) }}">{{$val->day}}</a></th>
+        <th scope="row"><a href="{{ url('/holiday'. $val->id) }}">{{$val->day}}</a></th>
         <td>{{$val->description}}</td>
         <td>{{$val->created_at}}</td>
         <td>{{$val->updated_at}}</td>
-        <td><form action="/holiday" method="post">
+        <td><form method="post" action="{{ url('/holiday') }}">
             <input type="hidden" name="id" value="{{$val->id}}">
             {{ method_field('delete') }}
             {{csrf_field()}}
