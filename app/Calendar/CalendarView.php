@@ -2,10 +2,12 @@
 namespace App\Calendar;
 
 use Carbon\Carbon;
+use App\Calendar\ExtraHoliday;
 
 class CalendarView {
 
 	protected $carbon;
+	protected $holidays = [];
 
 	function __construct($date){
 		$this->carbon = new Carbon($date);
@@ -21,6 +23,16 @@ class CalendarView {
 	 * カレンダーを出力する
 	 */
 	function render(){
+
+		//HolidaySetting
+		$setting = HolidaySetting::firstOrNew();
+		$setting->loadHoliday($this->carbon->format("Y"));
+
+		//臨時営業日の読み込み
+		$this->holidays = ExtraHoliday::getExtraHolidayWithMonth($this->carbon->format("Ym"));
+
+		//臨時営業日を取得する
+
 		$html = [];
 		$html[] = '<div class="calendar">';
 		$html[] = '<table class="table">';
@@ -37,23 +49,35 @@ class CalendarView {
 		$html[] = '</thead>';
 
 		$html[] = '<tbody>';
-
 		$weeks = $this->getWeeks();
 		foreach($weeks as $week){
 			$html[] = '<tr class="'.$week->getClassName().'">';
-			$days = $week->getDays();
+
+			$days = $week->getDays($setting);
+
 			foreach($days as $day){
-				$html[] = '<td class="'.$day->getClassName().'">';
-				$html[] = $day->render();
-				$html[] = '</td>';
+				$html[] = $this->renderDay($day);
 			}
+
 			$html[] = '</tr>';
 		}
-		
 		$html[] = '</tbody>';
 
 		$html[] = '</table>';
 		$html[] = '</div>';
+
+		return implode("", $html);
+	}
+
+	/**
+	 * 日を描画する
+	 */
+	protected function renderDay(CalendarWeekDay $day){
+		$html = [];
+		$html[] = '<td class="'.$day->getClassName().'">';
+		$html[] = $day->render();
+		$html[] = '</td>';
+
 		return implode("", $html);
 	}
 
