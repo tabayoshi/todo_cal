@@ -6,6 +6,8 @@ use App\Holiday;
 use Illuminate\Http\Request;
 use App\Calendar;
 
+
+
 class CalendarController extends Controller
 {
     public function show(Request $request)
@@ -15,12 +17,12 @@ class CalendarController extends Controller
         $list = Holiday::all();
         return view('calendar.holiday', ['list' => $list, 'data' => $data]);        
     }
-    public function update(Request $request)
+    public function update($id)
     {
         // 休日データ取得
         $data = new Holiday();
         if(isset($id)) {
-            $data = Holiday::where('id', $request->id)->first();
+            $data = Holiday::where('id', '=', $id)->first();
         }
         $list = Holiday::all();
         return view('calendar.holiday', ['list' => $list, 'data' => $data]);
@@ -34,7 +36,7 @@ class CalendarController extends Controller
         
         // POSTで受信した休日データの登録
         if(isset($request->id)){
-            $holiday = Holiday::where('id', $request->id)->first(); 
+            $holiday = Holiday::where('id', '=', $request->id)->first(); 
             $holiday->day = $request->day;
             $holiday->description = $request->description;        
             $holiday->save();

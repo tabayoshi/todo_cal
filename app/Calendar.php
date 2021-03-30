@@ -61,7 +61,7 @@ class Calendar
         } else {
           $this->html .= "<td>" . $day ."&nbsp";
           $target = date("Y-m-d", mktime(0, 0, 0, $month, $day, $year));
-          foreach($this->holidays as $val) { //(arrray)で$this->holidaysを強制的に配列にする
+          foreach($this->holidays as $val) {
             if($val->day == $target) {
               $this->html .= $val->description;
               break;
