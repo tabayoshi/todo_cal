@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Holiday;
 use Illuminate\Http\Request;
 use App\Calendar;
+use App\Todo;
+
 
 
 
@@ -59,7 +61,10 @@ class CalendarController extends Controller
         $cal = new Calendar($list);
         $tag = $cal->showCalendarTag($request->month, $request->year);
 
-        return view('calendar.index', ['cal_tag' => $tag]);
+        // deadlineを参照にして期限の近い順に並べる
+        $todos = Todo::orderByRaw('`deadline` IS NULL ASC')->orderBy('deadline')->get();
+
+        return view('calendar.index', ['cal_tag' => $tag,'todos' => $todos]);
 
     }
 

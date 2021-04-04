@@ -24,10 +24,16 @@ Route::get('/holiday/{id}', 'CalendarController@update');
 Route::delete('/holiday',  'CalendarController@delete');
 
 // TODOリストのルート
-Route::resource('/todos', 'TodoController');
+
+Route::post('/todos', 'TodoController@store')->name('store');
+Route::delete('/todos', 'TodoController@destroy')->name('delete');
+
 
 // MEMOのルート
 Route::resource('/memo', 'MemoController');
+Route::get('/memos/{id}', 'MemoController@index')->name('index');
+Route::post('/memos', 'MemoController@store')->name('store');
+Route::delete('/memos', 'MemoController@destroy')->name('delete');
 
 // Auth::routes();
 

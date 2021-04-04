@@ -9,5 +9,6 @@ class Memo extends Model
     protected $fillable =  [
         'todo_id',
         'memo',
+        'memo_flag',
     ];
 }

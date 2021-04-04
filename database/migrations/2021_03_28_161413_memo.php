@@ -14,9 +14,10 @@ class Memo extends Migration
     public function up()
     {
         Schema::create('memos', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->foreignId('todo_id');
             $table->text('memo');
+            $table->boolean('memo_flag');
         });
     }
 

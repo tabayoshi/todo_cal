@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Todo;
+use App\Calendar;
 use Brian2694\Toastr\Facades\Toastr;
 
 class TodoController extends Controller
@@ -13,22 +14,7 @@ class TodoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-        // 期限が近いものから順に表示
-        //  $todos = Todo::where('id',1)->get();
-        $todos = Todo::find(1);
-        // $todos = Todo::orderByRaw('`deadline` IS NULL ASC')->orderBy('deadline')->get();
-
-        return view('index', ['todos' => $todos]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function index()
     {
         //
     }
@@ -47,7 +33,7 @@ class TodoController extends Controller
         ]);
 
         //DBに保存
-        Todo::create([
+        $todo = Todo::create([
             'todo' => $request->newTodo,
             'deadline' => $request->newDeadline,
         ]);
@@ -55,19 +41,7 @@ class TodoController extends Controller
         // フラッシュメッセージ
         Toastr::success('新しいタスクが追加されました！');
 
-        return redirect()->route('todos.index');
-
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()->back();
     }
 
     /**
@@ -78,10 +52,9 @@ class TodoController extends Controller
      */
     public function edit($id)
     {
-        $todo = Todo::find($id);
-
-        return view('todo.edit', [
-            'todo' => $todo,
+        $todos = Todo::find($id);
+        return view('todos.edit', [
+            'todos' => $todos,
         ]);
     }
 
@@ -100,7 +73,6 @@ class TodoController extends Controller
         ]);
 
         $todo = Todo::find($id);
-
         $todo->todo = $request->updateTodo;
         $todo->deadline = $request->updateDeadline;
         $todo->save();
@@ -126,6 +98,6 @@ class TodoController extends Controller
         // フラッシュメッセージ
         Toastr::success('タスクが削除されました');
 
-        return redirect()->route('todos.index');
+        return redirect()->back();
     }
 }

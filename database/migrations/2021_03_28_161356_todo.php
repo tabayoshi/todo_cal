@@ -19,7 +19,8 @@ class Todo extends Migration
             $table->text('todo');
             $table->date('deadline')->nullable();
             // $table->boolean('todo_flag');
-             $table->timestamps();
+             $table->timestamps('created_at');
+             $table->timestamps('updated_at');
         });
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Memo;
+use App\Todo;
 
 class MemoController extends Controller
 {
@@ -12,9 +13,18 @@ class MemoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('memos.index');
+        // todo取得
+        $todos = Todo::where('id', $request->id)->get();
+        // memo取得
+        $memos = Memo::where('todo_id', $request->id)->get();
+
+        return view('memos.index',
+            [
+            'todos' => $todos,
+            'memos' => $memos,
+            ]);
     }
 
     /**
@@ -35,7 +45,11 @@ class MemoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Memo::create([
+            'todo_id' => $request->todo_id,
+            'memo' => $request->newMemo,
+        ]);
+        return redirect()->back();
     }
 
     /**
@@ -44,9 +58,19 @@ class MemoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        // todo取得
+        $todos = Todo::where('id', $request->id)->get();
+        // memo取得
+        $memos = Memo::where('id', $request->id)->get();
+        
+        return view('memos', 
+        [
+            'todos' => $todos,
+            'memos' => $memos,
+            ]);
+        
     }
 
     /**
@@ -69,7 +93,11 @@ class MemoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $flag = Memo::where('id', $request->id)->update([
+            'memo_flag' => $request->memo_flag
+        ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -78,8 +106,13 @@ class MemoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        if(isset($request->id)) {
+            $delete = Memo::where('id', $request->id)->first();
+            $delete->delete();
+        }
+
+        return redirect()->back();
     }
 }
