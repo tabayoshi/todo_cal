@@ -48,6 +48,7 @@ class MemoController extends Controller
         Memo::create([
             'todo_id' => $request->todo_id,
             'memo' => $request->newMemo,
+            'memo' => $request->memo,
         ]);
         return redirect()->back();
     }
@@ -69,6 +70,7 @@ class MemoController extends Controller
         [
             'todos' => $todos,
             'memos' => $memos,
+            'count' => $count,
             ]);
         
     }
@@ -91,12 +93,10 @@ class MemoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $flag = Memo::where('id', $request->id)->update([
-            'memo_flag' => $request->memo_flag
-        ]);
-
+        $flag = Memo::where('id', $request->id)->update(['memo_flag' => $request->memo_flag]);
+        
         return redirect()->back();
     }
 

@@ -1,13 +1,20 @@
 <?php
 namespace App;
 
+use App\Todo;
+
 class Calendar
 {
-  private $holidays;
-  function __construct($holidays) {
-    $this->holidays = $holidays;
-  }
+  private $todos;
   private $html;
+  function __construct($todos) {
+    $this->todos = $todos;
+  }
+  // ----------------------------------------------
+  // private $holidays;
+  // function __construct($holidays) {
+  //   $this->holidays = $holidays;
+  // }
   public function showCalendarTag($m, $y)
   {
     $year = $y;
@@ -61,9 +68,11 @@ class Calendar
         } else {
           $this->html .= "<td>" . $day ."&nbsp";
           $target = date("Y-m-d", mktime(0, 0, 0, $month, $day, $year));
-          foreach($this->holidays as $val) {
-            if($val->day == $target) {
-              $this->html .= $val->description;
+          // foreach($this->holidays as $val) {
+          foreach($this->todos as $todo) {
+            if($todo->day == $target) {
+              // $this->html .= $val->description;
+              $this->html .= e($todo->todo); /////////////////////////////////////////
               break;
             }
           }
@@ -73,7 +82,8 @@ class Calendar
       }
       $this->html .= "</tr>";
     }
-    return $this->html .= '</table>';
+    $this->html .= '</table>';
+    return $this->html;
   }
   
 }

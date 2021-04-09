@@ -33,7 +33,8 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col" style="width: 60%">Todo</th>
+                            <th scope="col" style="width: 30%">Todo</th>
+                            <th scope="col" style="width: 30%"></th>
                             <th scope="col">期限</th>
                             <th scope="col"></th>
                             <th scope="col"></th>
@@ -42,18 +43,27 @@
                     <tbody>
                         @foreach($todos as $todo)
                         <tr>
-                            <th scope="row"><a href="{{ url('memos', $todo->id) }}"><input type="radio">{{ $todo->todo }}</a></th>
+                            <th><a href="{{ url('memos', $todo->id) }}">{{$todo->id}}.{{ $todo->todo }}</th>
+                            <td>
+                            @if($count == 0)
+                                このタスクは全て終了しました
+                            @else
+                                まだ{{$count}}つのタスクが残っています
+                            @endif
+                            
+                            </td>
                             <td>{{ $todo->deadline }}</td>
-                            <td><a href="" class="btn btn-primary">編集</a></td>
-                            {!! Form::open(['route' => ['delete', $todo->id], 'method' => 'POST']) !!}
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                                <td>{{ Form::submit('削除', ['class' => 'btn btn-danger']) }}</td>
-                            {!! Form::close() !!}
+                            <!-- <td><a href="" class="btn btn-primary">編集</a></td> -->
+                            <form method="post" action="{{ url('/todos') }}">
+                            <input type="hidden" name="id" value="{{$todo->id}}">
+                            {{ method_field('delete') }}
+                            {{csrf_field()}}
+                            <td>
+                            <button class="btn btn-danger" type="submit">消去</button>
+                            </td>
+                            </form>
                         </tr>
                         @endforeach
-
-                        
                     </tbody>
                 </table>
             </div>

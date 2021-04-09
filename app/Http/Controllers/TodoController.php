@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Todo;
 use App\Calendar;
+use App\Memo;
+
 use Brian2694\Toastr\Facades\Toastr;
 
 class TodoController extends Controller
@@ -89,11 +91,10 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $todo = Todo::find($id);
-
-        $todo->delete();
+        $delete = Todo::where('id', $request->id)->first();
+            $delete->delete();
 
         // フラッシュメッセージ
         Toastr::success('タスクが削除されました');
