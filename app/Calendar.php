@@ -10,11 +10,7 @@ class Calendar
   function __construct($todos) {
     $this->todos = $todos;
   }
-  // ----------------------------------------------
-  // private $holidays;
-  // function __construct($holidays) {
-  //   $this->holidays = $holidays;
-  // }
+
   public function showCalendarTag($m, $y)
   {
     $year = $y;
@@ -68,11 +64,9 @@ class Calendar
         } else {
           $this->html .= "<td>" . $day ."&nbsp";
           $target = date("Y-m-d", mktime(0, 0, 0, $month, $day, $year));
-          // foreach($this->holidays as $val) {
           foreach($this->todos as $todo) {
-            if($todo->day == $target) {
-              // $this->html .= $val->description;
-              $this->html .= e($todo->todo); /////////////////////////////////////////
+            if($todo->deadline == $target) {
+              $this->html .= e($todo->todo);
               break;
             }
           }

@@ -13,7 +13,7 @@
             </div>
             <div class="container mt-3">
                 <div class="container mb-4">
-                    {!! Form::open(['route' => 'store', 'method' => 'POST']) !!}
+                    {!! Form::open(['url' => 'todos', 'method' => 'POST']) !!}
                     {{ csrf_field() }}
                         <div class="row">
                             {{ Form::text('newTodo', null, ['class' => 'form-control col-8 mr-5']) }}
@@ -46,7 +46,7 @@
                             <th><a href="{{ url('memos', $todo->id) }}">{{$todo->id}}.{{ $todo->todo }}</th>
                             <td>
                             @if($count == 0)
-                                このタスクは全て終了しました
+                                <p class="badge badge-success"style="font-size: 17px;">このタスクは全て終了しました</p>
                             @else
                                 まだ{{$count}}つのタスクが残っています
                             @endif

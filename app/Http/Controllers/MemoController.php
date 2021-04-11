@@ -20,12 +20,20 @@ class MemoController extends Controller
         // memo取得
         $memos = Memo::where('todo_id', $request->id)->get();
 
+        // ------------------------------------------------------
+            $count = Memo::where('todo_id',$request->id)
+                ->where(function($i){
+                    $i->where('memo_flag', 0);
+            })->get()->count();
+            // dd($count);
+        // ------------------------------------------------------
         return view('memos.index',
             [
             'todos' => $todos,
             'memos' => $memos,
+            'count' => $count,
             ]);
-    }
+        } 
 
     /**
      * Show the form for creating a new resource.

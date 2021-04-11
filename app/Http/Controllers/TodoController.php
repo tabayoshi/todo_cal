@@ -41,7 +41,7 @@ class TodoController extends Controller
         ]);
 
         // フラッシュメッセージ
-        Toastr::success('新しいタスクが追加されました！');
+        Toastr::success('新規追加されました！');
 
         return redirect()->back();
     }
@@ -97,7 +97,7 @@ class TodoController extends Controller
             $delete->delete();
 
         // フラッシュメッセージ
-        Toastr::success('タスクが削除されました');
+        Toastr::success('削除されました');
 
         return redirect()->back();
     }

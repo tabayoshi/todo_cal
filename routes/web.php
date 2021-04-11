@@ -24,6 +24,7 @@ Route::get('/','CalendarController@index');
 // Route::delete('/holiday',  'CalendarController@delete');
 
 // TODOリストのルート
+Route::resource('/todos', 'MemoController');
 Route::post('/todos', 'TodoController@store')->name('store');
 Route::delete('/todos', 'TodoController@destroy')->name('delete');
 

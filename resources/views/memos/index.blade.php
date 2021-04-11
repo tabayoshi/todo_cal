@@ -32,43 +32,51 @@
               <th scope="col"></th>
               <th scope="col"></th>
           </tr>
-          </thead>
-          @foreach($memos as $memo)
-          <thead>
-            <th>
-            {{ $memo->memo }}
-            </th>
-            <th>
-              @if(($memo ->memo_flag) === 1)
-                <p class="badge badge-success" style="font-size: 17px;">このタスクは終了しました</p>
-              @endif    
-            </th>
-            
-            <form method="post" action="{{ route('update') }}">
-            <input type="hidden" name="id" value="{{ $memo->id }}">
-            @method('PATCH')
-            {{ csrf_field() }}
-            <input type="hidden" name="memo_flag" value="1">
-            <td>
-              <input class="btn btn-success" type="submit" value="タスク終了">
-            </td>
-            </form>
+        </thead>
+        @foreach($memos as $memo)
+        <thead>
+          <th>
+          {{ $memo->memo }}
+          </th>
+          <th>
+            @if(($memo ->memo_flag) === 1)
+              <p class="badge badge-success" style="font-size: 17px;">このタスクは終了しました</p>
+            @endif    
+          </th>
+          
+          <form method="post" action="{{ route('update') }}">
+          <input type="hidden" name="id" value="{{ $memo->id }}">
+          @method('PATCH')
+          {{ csrf_field() }}
+          <input type="hidden" name="memo_flag" value="1">
+          <td>
+            <input class="btn btn-success" type="submit" value="タスク終了">
+          </td>
+          </form>
 
-            <form method="post" action="{{ url('/memos') }}">
-            <input type="hidden" name="id" value="{{$memo->id}}">
-            {{ method_field('delete') }}
-            {{csrf_field()}}
-            <td>
-              <button class="btn btn-danger" type="submit">消去</button>
-            </td>
-            </form>
-          </thead>
+          <form method="post" action="{{ url('/memos') }}">
+          <input type="hidden" name="id" value="{{$memo->id}}">
+          {{ method_field('delete') }}
+          {{csrf_field()}}
+          <td>
+            <button class="btn btn-danger" type="submit">消去</button>
+          </td>
+          </form>
+        </thead>
         @endforeach
       </table>
-
-    
     </div>
+    <div>
     
+      @if(empty($memo))
+        タスクはありません
+      @elseif($count == 0)
+        このタスクは全て終了しました
+      @else
+        まだ{{$count}}つのタスクが残っています
+      @endif
+  
+    </div>
       <a href="{{ url('/') }}">カレンダーに戻る</a>
 </div>
 </body>
